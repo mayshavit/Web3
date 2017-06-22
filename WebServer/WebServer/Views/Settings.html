@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Settings</title>
+
+    <link href="Styles/bootstrap.css" rel="stylesheet" />
+    <script src="../Scripts/jquery-3.2.1.js"></script>
+    <script src="../Scripts/bootstrap.js"></script>
+</head>
+<body>
+
+    <script src="../Scripts/navbar.js"></script>
+    <p><div id="navBar"></div></p>
+    <div align="center"><h1>settings</h1></div>
+    <div align="center">
+        <form id="mazeForm">
+            <label>rows</label>
+            <input id="rowsId" type="number" min="2" max="100" class="numbers" /><br /><br />
+            <label>cols</label>
+            <input id="colsId" type="number" min="2" max="100" class="numbers" /><br /><br />
+            <label>search algo</label><br />
+            <select id="algoSelection"></select><br /><br />
+            <input id="submitBtn" type="submit" value="save changes!" /><br />
+        </form>
+    </div> 
+    <br />
+    <br />
+    <script src="../Scripts/Setting.js"></script>
+    <style>
+        select{
+            font-size: 25px;
+        }
+        h1{
+            font-size: 100px;
+        }
+        #algoSelection{
+            height: 50px;
+            width: 100px;
+        }
+        .numbers{
+            width: 150px;
+            position: relative;
+            left: 20px;
+        }
+        #colsId{
+            position: relative;
+            left: 28px;
+        }
+        label{
+            font-size: 50px;
+        }
+        input{
+            font-size: 30px;
+        }
+    </style>
+
+</body>
+</html>
