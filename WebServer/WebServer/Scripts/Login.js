@@ -6,10 +6,29 @@
             alert("you have to fill username and password");
         }
         else {
-            sessionStorage.setItem("playerName", username);
-            //alert("before");
-            window.location.href = "HomePage.html";
-            //alert("after");
+            try {
+                $.ajax({
+                    type: "GET",
+                    url: "/../api/Client",
+                    data: { id: username, password: password },
+                    async: false,
+                    success: function (data) {
+                        if (data == "notFound") {
+                            alert("wrong username or password");
+                        }
+                        else {
+                            sessionStorage.setItem("playerName", username);
+                            window.location.href = "HomePage.html";
+                        }
+                    },
+                    Error: function (errorMess) {
+                        alert("Error");
+                    }
+                });
+            }
+            catch (exeptionMess) {
+                alert("priblem in ajax");
+            }
             return false;
         }
     });
