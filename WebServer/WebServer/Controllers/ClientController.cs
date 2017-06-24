@@ -18,13 +18,6 @@ namespace WebServer.Controllers
     public class ClientController : ApiController
     {
         private WebServerContext db = new WebServerContext();
-
-        // GET: api/Client
-        //public IQueryable<ClientModel> GetClientModels()
-        //{
-        //    return db.ClientModels;
-        //}
-
         // GET: api/Client/5
         [ResponseType(typeof(ClientModel))]
         public /*async*/ string GetClientModel(string id, string password)
