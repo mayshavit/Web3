@@ -22,11 +22,12 @@ namespace WebServer.Controllers
         private WebServerContext db = new WebServerContext();
 
         // GET: api/Client
-        public IQueryable<ClientModel> GetClientModels()
+        [Route("api/Client/Rankings")]
+        public List<ClientModel> GetClientModels()
         {
-            List<ClientModel> userRankings = new List<ClientModel>(db.ClientModels.Count());
+            List<ClientModel> userRankings = new List<ClientModel>();
             foreach (ClientModel dbClientModel in db.ClientModels)
-            { 
+            {
                 ClientModel clientModel = new ClientModel()
                 {
                     UserName = dbClientModel.UserName,
@@ -39,20 +40,29 @@ namespace WebServer.Controllers
                 }
                 else
                 {
-                    for (int i = 0; i < userRankings.Count(); i++)
+                    int rank = clientModel.Wins - clientModel.Loses;
+                    int rank2 = userRankings.Last().Wins - userRankings.Last().Loses;
+                    if (rank <= rank2)
                     {
-                        int rank = clientModel.Wins - clientModel.Loses;
-                        int rank2 = userRankings[i].Wins - userRankings[i].Loses;
-                        if (rank > rank2)
+                        userRankings.Add(clientModel);
+                    }
+                    else
+                    {
+                        for (int i = 0; i < userRankings.Count(); i++)
                         {
-                            userRankings[i] = clientModel;
-                            break;
+                            rank2 = userRankings[i].Wins - userRankings[i].Loses;
+                            if (rank > rank2)
+                            {
+                                //userRankings[i] = clientModel;
+                                userRankings.Insert(i, clientModel);
+                                break;
+                            }
                         }
                     }
                 }
             }
             //return db.ClientModels;
-            return userRankings.AsQueryable();
+            return userRankings;
         }
 
         // GET: api/Client/5
@@ -109,7 +119,7 @@ namespace WebServer.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return "Bad Request"; 
+                return "Bad Request";
             }
             if (ClientModelExists(clientModel.UserName))
             {

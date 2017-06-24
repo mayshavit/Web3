@@ -8,14 +8,25 @@
     <script src="../Scripts/jquery-3.2.1.js"></script>
     <script src="../Scripts/bootstrap.js"></script>
     <script src="../Scripts/navbar.js"></script>
+    <script src="../Scripts/UserRankings.js"></script>
     <link rel="icon"
           type="image/png"
           href="Images/icon.png" />
 </head>
 <body>
-    <div id="navBar" />
-    <h2>User Rankings</h2>
-    <ol id="lstRankings"></ol>
-    <script src="../Scripts/UserRankings.js"></script>
+    <p><div id="navBar"></div></p>
+    <div>
+        <h2>User Rankings</h2>
+        <table class="table" id="rankingsTable">
+            <tr>
+                <th>Rank</th>
+                <th>Username</th>
+                <th>Wins</th>
+                <th>Losses</th>
+            </tr>
+        </table>
+        <ol id="lstRankings"></ol>
+        
+    </div>
 </body>
 </html>
