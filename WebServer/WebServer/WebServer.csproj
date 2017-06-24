@@ -97,6 +97,7 @@
     <Content Include="Scripts\jquery-1.6.4.js" />
     <Content Include="Scripts\jquery-1.6.4.min.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
+    <Content Include="Scripts\jquery-3.2.1.min.js" />
     <Content Include="Scripts\jquery.form.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\knockout-3.4.2.debug.js" />
@@ -106,7 +107,9 @@
     <Content Include="Scripts\Register.js" />
     <Content Include="Scripts\sessionNavbar.js" />
     <Content Include="Scripts\Setting.js" />
+    <Content Include="Scripts\UserRankings.js" />
     <Content Include="Views\HomePage.html" />
+    <Content Include="Views\Images\icon.png" />
     <Content Include="Views\Images\loginPic.jpg" />
     <Content Include="Views\Login.html" />
     <Content Include="Views\MultiplayerGame.html" />

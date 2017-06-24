@@ -6,6 +6,8 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -18,6 +20,13 @@ namespace WebServer.Controllers
     public class ClientController : ApiController
     {
         private WebServerContext db = new WebServerContext();
+
+        // GET: api/Client
+        //public IQueryable<ClientModel> GetClientModels()
+        //{
+        //    return db.ClientModels;
+        //}
+
         // GET: api/Client/5
         [ResponseType(typeof(ClientModel))]
         public /*async*/ string GetClientModel(string id, string password)
@@ -68,24 +77,31 @@ namespace WebServer.Controllers
 
         // POST: api/Client
         [ResponseType(typeof(ClientModel))]
-        public async Task<IHttpActionResult> PostClientModel(ClientModel clientModel)
+        public string PostClientModel(ClientModel clientModel)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return "Bad Request"; 
             }
+            if (ClientModelExists(clientModel.UserName))
+            {
+                return "Conflict";
+            }
+
+            clientModel.Password = Hash(clientModel.Password);
 
             db.ClientModels.Add(clientModel);
 
             try
             {
-                await db.SaveChangesAsync();
+                db.SaveChanges();
             }
             catch (DbUpdateException)
             {
                 if (ClientModelExists(clientModel.UserName))
                 {
-                    return Conflict();
+                    db.ClientModels.Remove(clientModel);
+                    return "Conflict";
                 }
                 else
                 {
@@ -93,7 +109,23 @@ namespace WebServer.Controllers
                 }
             }
 
-            return CreatedAtRoute("DefaultApi", new { id = clientModel.UserName }, clientModel);
+            return "Success";
+        }
+
+        static string Hash(string password)
+        {
+            using (SHA1Managed sha1 = new SHA1Managed())
+            {
+                var hash = sha1.ComputeHash(Encoding.UTF8.GetBytes(password));
+                var sb = new StringBuilder(hash.Length * 2);
+
+                foreach (byte b in hash)
+                {
+                    sb.Append(b.ToString("x2"));
+                }
+
+                return sb.ToString();
+            }
         }
 
         // DELETE: api/Client/5
