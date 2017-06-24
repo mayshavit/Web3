@@ -49,7 +49,7 @@
                         alert(err);
                 });
         }
-        else {
+        else {//
             alert("Please enter your details correctly!");
         }
     });
