@@ -6,37 +6,42 @@
 
     <link href="Styles/bootstrap.css" rel="stylesheet" />
     <script src="../Scripts/jquery-3.2.1.js"></script>
+    <!--<script src="../Scripts/jquery-3.2.1.min.js"></script>-->
+    <script src="../Scripts/jquery.validate.js"></script>
     <script src="../Scripts/bootstrap.js"></script>
     <script src="../Scripts/navbar.js"></script>
-    <script src="../Scripts/jquery.validate.js"></script>
-    <script src="../Scripts/Register.js"></script>
+    <link rel="icon"
+          type="image/png"
+          href="Images/icon.png" />
 </head>
 <body>
     <p><div id="navBar"></div></p>
     <div>
         <h2>Register</h2>
-        <form>
+        <form id="registerForm">
             <table>
                 <tr>
-                    <td>Username: </td>
-                    <td><input type="text" id="usrName" /></td>
+                    <td><label for="usrName">Username:</label></td>
+                    <td><input type="text" id="usrName" name="usrName" /></td>
                 </tr>
                 <tr>
-                    <td>Password: </td>
-                    <td><input type="password" id="password" /></td>
+                    <td><label for="password">Password:</label></td>
+                    <td><input id="password" type="password" name="password" /></td>
                 </tr>
                 <tr>
-                    <td>Enter your password again: </td>
-                    <td><input type="password" id="passwordValidation" /></td>
+                    <td><label for="passwordValidation">Please enter your password again:</label></td>
+                    <td><input class="left" type="password" id="passwordValidation" name="passwordValidation" /></td>
                 </tr>
                 <tr>
-                    <td>Email: </td>
-                    <td><input type="email" id="email" /></td>
+                    <td><label for="email">Email: </label></td>
+                    <td><input type="email" id="email" name="email" /></td>
+                </tr>
+                <tr>
+                    <td><input type="submit" id="btnRegister" value="Register" /></td>
                 </tr>
             </table>
         </form>
         <!--<form id="registerForm" <!--action="HomePage.html"-->
-        <input type="submit" id="btnRegister" value="Register" />
         <!--</form>-->
         <style>
             tr, td {
@@ -44,7 +49,7 @@
                 padding: 9px;
             }
         </style>
-
+        <script src="../Scripts/Register.js"></script>
     </div>
 
 </body>

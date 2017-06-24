@@ -6,6 +6,8 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
@@ -22,7 +24,35 @@ namespace WebServer.Controllers
         // GET: api/Client
         public IQueryable<ClientModel> GetClientModels()
         {
-            return db.ClientModels;
+            List<ClientModel> userRankings = new List<ClientModel>(db.ClientModels.Count());
+            foreach (ClientModel dbClientModel in db.ClientModels)
+            { 
+                ClientModel clientModel = new ClientModel()
+                {
+                    UserName = dbClientModel.UserName,
+                    Wins = dbClientModel.Wins,
+                    Loses = dbClientModel.Loses
+                };
+                if (userRankings.Count == 0)
+                {
+                    userRankings.Add(clientModel);
+                }
+                else
+                {
+                    for (int i = 0; i < userRankings.Count(); i++)
+                    {
+                        int rank = clientModel.Wins - clientModel.Loses;
+                        int rank2 = userRankings[i].Wins - userRankings[i].Loses;
+                        if (rank > rank2)
+                        {
+                            userRankings[i] = clientModel;
+                            break;
+                        }
+                    }
+                }
+            }
+            //return db.ClientModels;
+            return userRankings.AsQueryable();
         }
 
         // GET: api/Client/5
@@ -75,24 +105,31 @@ namespace WebServer.Controllers
 
         // POST: api/Client
         [ResponseType(typeof(ClientModel))]
-        public async Task<IHttpActionResult> PostClientModel(ClientModel clientModel)
+        public string PostClientModel(ClientModel clientModel)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return "Bad Request"; 
             }
+            if (ClientModelExists(clientModel.UserName))
+            {
+                return "Conflict";
+            }
+
+            clientModel.Password = Hash(clientModel.Password);
 
             db.ClientModels.Add(clientModel);
 
             try
             {
-                await db.SaveChangesAsync();
+                db.SaveChanges();
             }
             catch (DbUpdateException)
             {
                 if (ClientModelExists(clientModel.UserName))
                 {
-                    return Conflict();
+                    db.ClientModels.Remove(clientModel);
+                    return "Conflict";
                 }
                 else
                 {
@@ -100,7 +137,23 @@ namespace WebServer.Controllers
                 }
             }
 
-            return CreatedAtRoute("DefaultApi", new { id = clientModel.UserName }, clientModel);
+            return "Success";
+        }
+
+        static string Hash(string password)
+        {
+            using (SHA1Managed sha1 = new SHA1Managed())
+            {
+                var hash = sha1.ComputeHash(Encoding.UTF8.GetBytes(password));
+                var sb = new StringBuilder(hash.Length * 2);
+
+                foreach (byte b in hash)
+                {
+                    sb.Append(b.ToString("x2"));
+                }
+
+                return sb.ToString();
+            }
         }
 
         // DELETE: api/Client/5
