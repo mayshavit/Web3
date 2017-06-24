@@ -57,15 +57,15 @@ namespace WebServer.Controllers
 
         // GET: api/Client/5
         [ResponseType(typeof(ClientModel))]
-        public async Task<IHttpActionResult> GetClientModel(string id)
+        public /*async*/ string GetClientModel(string id, string password)
         {
-            ClientModel clientModel = await db.ClientModels.FindAsync(id);
-            if (clientModel == null)
+            // ClientModel clientModel = await db.ClientModels.FindAsync(id);
+            ClientModel clientModel =  db.ClientModels.Find(id);
+            if (clientModel == null || clientModel.Password != password)
             {
-                return NotFound();
+                return "notFound";
             }
-
-            return Ok(clientModel);
+            return clientModel.UserName;
         }
 
         // PUT: api/Client/5
