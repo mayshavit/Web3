@@ -136,7 +136,7 @@ namespace WebServer
             return solution;
         }
 
-        /*/// <summary>
+        /// <summary>
         /// Starts the game.
         /// </summary>
         /// <param name="name">The name.</param>
@@ -144,20 +144,20 @@ namespace WebServer
         /// <param name="cols">The cols.</param>
         /// <param name="gamer">The gamer.</param>
         /// <returns></returns>
-        public Maze StartGame(string name, int rows, int cols, ClientNotifier gamer)
+        public Maze StartGame(string name, int rows, int cols/*, ClientNotifier gamer*/)
         {
             //Maze maze = GenerateMaze(name, rows, cols);
             IMazeGenerator mazeGenerator = new DFSMazeGenerator();
             Maze maze = mazeGenerator.Generate(rows, cols);
             maze.Name = name;
-            MultiGame game = new MultiGame(name, maze, null);
-            game.AddGamer(gamer);
+            MultiGame game = new MultiGame(name, maze);
+            //game.AddGamer(gamer);
             //cash.AddGame(name, game);
             cash.AddMultiGame(name, game);
             return maze;
         }
 
-        /// <summary>
+        /*/// <summary>
         /// Connect a gamer to the game.
         /// </summary>
         /// <param name="name">The name.</param>

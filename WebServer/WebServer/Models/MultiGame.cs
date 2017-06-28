@@ -53,7 +53,7 @@ namespace WebServer
         /// <param name="solution2">The solution.</param>*/
         //public MultiGame (string name2, Maze maze2, Solution<Position> solution2)
         //public MultiGame ()
-        public MultiGame (string name2, Maze maze2, Solution<Position> solution2) :
+        public MultiGame (string name2, Maze maze2/*, Solution<Position> solution2*/) :
             base (name2, maze2/*, solution2*/)
         {
             //gamers = new List<ClientNotifier>();
