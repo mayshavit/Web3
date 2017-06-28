@@ -2,14 +2,92 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Single Game</title>
+    <title id="title">Single Game</title>
 
     <link href="Styles/bootstrap.css" rel="stylesheet" />
     <script src="../Scripts/jquery-3.2.1.js"></script>
+    <script src="../Scripts/jquery.mazeBoard.js"></script>
     <script src="../Scripts/bootstrap.js"></script>
+    <link rel="icon"
+          type="image/png"
+          href="Images/icon.png" />
 </head>
 <body>
     <script src="../Scripts/navbar.js"></script>
-    <div id="navBar" />
+    <script src="../Scripts/SingleGame.js"></script>
+    <div id="navBar"></div>
+    <div class="divider">
+        <h2 class="h2">Single Game</h2>
+    </div>
+    <div>
+        <table>
+            <tr>
+                <td>
+                    <form class="form-inline">
+                        <table>
+                            <tr>
+                                <th>Name</th>
+                                <td><input id="mazeName" /></td>
+                            </tr>
+                            <tr>
+                                <th>Rows</th>
+                                <td><input id="rows"/></td>
+                            </tr>
+                            <tr>
+                                <th>Cols</th>
+                                <td><input id="cols"/></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><button id="startGame" type="submit" onsubmit="return false">Start New Game</button></td>
+                            </tr>
+                            <tr>
+                                <th>Search Algo</th>
+                                <td>
+                                    <select id="searchAlgo">
+                                        <option id="firstAlgo">BFS</option>
+                                        <option id="secondAlgo">DFS</option>
+                                    </select>
+                                    <!--
+                                    <div class="dropdown">
+                                        <button class="btn dropdown-toggle" type="button"
+                                                id="dropdownMenu1" data-toggle="dropdown">
+                                            DFS
+                                            <span class="caret"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a>BFS</a></li>
+                                            <li><a>DFS</a></li>
+                                        </ul>
+                                    </div>-->
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><button id="solveGame">Solve Game</button></td>
+                            </tr>
+                        </table>
+                    </form>
+                </td>
+                <td>
+                   
+                </td>
+            </tr>
+        </table>
+        <div style="position: absolute; top:100px; left:460px">
+            <canvas id="mazeCanvas" width="450" height="450" style="border:solid; border-color: black"></canvas>
+        </div>
+        <style>
+            tr, td, th {
+                font-size: 14px;
+                padding: 9px;
+            }
+            #mazeCanvas {
+                border:thick;
+                border-color: red;
+                position: center;
+            }
+        </style>
+    </div>
 </body>
 </html>
