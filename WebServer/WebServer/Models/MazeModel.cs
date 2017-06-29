@@ -41,14 +41,14 @@ namespace WebServer
             return maze;
         }
 
-        /*/// <summary>
+        /// <summary>
         /// Returns a list of the mazes' names.
         /// </summary>
         /// <returns></returns>
         public List<string> MazesNames()
         {
             return cash.GetMazesNames();
-        }*/
+        }
 
         /// <summary>
         /// Solves the maze.
@@ -144,37 +144,42 @@ namespace WebServer
         /// <param name="cols">The cols.</param>
         /// <param name="gamer">The gamer.</param>
         /// <returns></returns>
-        public Maze StartGame(string name, int rows, int cols/*, ClientNotifier gamer*/)
+        public Maze StartGame(string name, int rows, int cols, string player/*, ClientNotifier gamer*/)
         {
             //Maze maze = GenerateMaze(name, rows, cols);
             IMazeGenerator mazeGenerator = new DFSMazeGenerator();
             Maze maze = mazeGenerator.Generate(rows, cols);
             maze.Name = name;
-            MultiGame game = new MultiGame(name, maze);
+            MultiGame game = new MultiGame(name, maze, player);
             //game.AddGamer(gamer);
             //cash.AddGame(name, game);
             cash.AddMultiGame(name, game);
             return maze;
         }
 
-        /*/// <summary>
+        /// <summary>
         /// Connect a gamer to the game.
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="gamer">The gamer.</param>
         /// <returns></returns>
-        public Maze JoinGame(string name, ClientNotifier gamer)
+        public Maze JoinGame(string name, string gamer)
         {
             //MultiGame game = cash.GetGame(name);
             MultiGame game = cash.GetMultiGame(name);
             game.AddGamer(gamer);
-            game.NotifyGamers();
+            //game.NotifyGamers();
 
             Maze maze = game.Maze;
             return maze;
         }
 
-        /// <summary>
+        public string GetOtherPlayerName(string gameName, string playerName)
+        {
+            return cash.GetMultiGame(gameName).GetOtherPlayerName(playerName);
+        }
+
+        /*/// <summary>
         /// Plays a move in the maze according to the gamer.
         /// </summary>
         /// <param name="move">The move.</param>

@@ -38,12 +38,35 @@ namespace WebServer
         }
 
         [Route("api/Maze/StartGame")]
-        public JObject GetStartGame(string name, int rows, int cols)
+        public JObject GetStartGame(string name, int rows, int cols, string player)
         {
-            Maze maze = model.StartGame(name, rows, cols);
+            Maze maze = model.StartGame(name, rows, cols, player);
             JObject obj = JObject.Parse(maze.ToJSON());
             return obj;
         }
+
+        [Route("api/Maze/GetMazes")]
+        public List<string> GetMazes()
+        {
+            return model.MazesNames();
+        }
+
+        [Route("api/Maze/JoinGame")]
+        public JObject GetJoinGame(string game, string player)
+        {
+            Maze maze = model.JoinGame(game, player);
+            JObject obj = JObject.Parse(maze.ToJSON());
+            return obj;
+            //return model.MazesNames();
+        }
+
+        [Route("api/Maze/GetOtherPlayerName")]
+        public string GetOtherPlayerName(string game, string player)
+        {
+            return model.GetOtherPlayerName(game, player);
+        }
+
+
 
         // GET: api/Maze
         public IEnumerable<string> Get()

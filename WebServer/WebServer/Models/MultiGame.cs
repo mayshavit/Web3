@@ -19,7 +19,9 @@ namespace WebServer
         //protected Maze maze;
         //private Solution<Position> solution;
         //protected Solution<Position> solution;
-        private List</*ClientNotifier*/string> gamers;
+        //private List</*ClientNotifier*/string> gamers;
+        private string myPlayer;
+        private string otherPlayer;
 
         /*/// <summary>
         /// Gets or sets the maze.
@@ -53,9 +55,11 @@ namespace WebServer
         /// <param name="solution2">The solution.</param>*/
         //public MultiGame (string name2, Maze maze2, Solution<Position> solution2)
         //public MultiGame ()
-        public MultiGame (string name2, Maze maze2/*, Solution<Position> solution2*/) :
+        public MultiGame (string name2, Maze maze2, string playerName/*, Solution<Position> solution2*/) :
             base (name2, maze2/*, solution2*/)
         {
+            myPlayer = playerName;
+            otherPlayer = "";
             //gamers = new List<ClientNotifier>();
         }
 
@@ -65,10 +69,29 @@ namespace WebServer
         /// <param name="gamer">The gamer.</param>
         public void AddGamer (/*ClientNotifier*/ string gamer)
         {
-            gamers.Add(gamer);
+            //gamers.Add(gamer);
+            otherPlayer = gamer;
         }
 
-        /// <summary>
+        public string GetOtherPlayerName(string name)
+        {
+            if (IsAGamer(name))
+            {
+                if (myPlayer == name)
+                {
+                    return otherPlayer;
+                }
+                else if (otherPlayer == name)
+                {
+                    return myPlayer;
+                }
+            }
+
+            return "not a gamer";
+            
+        }
+
+        /*/// <summary>
         /// Notifies the gamers to send the message.
         /// </summary>
         public void NotifyGamers ()
@@ -79,7 +102,7 @@ namespace WebServer
                 //gamers.ElementAt(i).ToSend = true;
 
             }
-        }
+        }*/
 
         /// <summary>
         /// Determines whether a gamer is a gamer.
@@ -88,24 +111,30 @@ namespace WebServer
         /// <returns>
         ///   <c>true</c> if [is a gamer] [the specified gamer]; otherwise, <c>false</c>.
         /// </returns>
-        public bool IsAGamer (/*ClientNotifier*/ string gamer)
+        private bool IsAGamer ( string gamer)
         {
-            for (int i = 0; i < gamers.Count; i++)
+            /*for (int i = 0; i < gamers.Count; i++)
             {
                 if (gamers.ElementAt(i).Equals(gamer))
                 {
                     return true;
                 }
+            }*/
+
+            if ((myPlayer == gamer) || (otherPlayer == gamer))
+            {
+                return true;
             }
+
             return false;
         }
 
-        /// <summary>
+        /*/// <summary>
         /// Updates the move.
         /// </summary>
         /// <param name="data">The data.</param>
         /// <param name="gamer">The gamer.</param>
-        public void UpdateMove (string data, /*ClientNotifier*/ string gamer)
+        public void UpdateMove (string data, /*ClientNotifier string gamer)
         {
             //gamer.ToSend = false;
             //gamer.Data = "";
@@ -135,6 +164,6 @@ namespace WebServer
                 //gamers.ElementAt(i).Data = "close";
 
             }
-        }
+        }*/
     }
 }

@@ -199,18 +199,18 @@ namespace WebServer
             return null;
         }*/
 
-        public MultiGame GetGameByGamer(/*ClientNotifier*/ string gamer)
+        /*public MultiGame GetGameByGamer(/*ClientNotifier string gamer)
         {
             foreach (MultiGame game in multiGames.Values)
             {
-                if (game.IsAGamer(gamer))
+                if (IsAGamer(gamer))
                 {
                     return game;
                 }
             }
 
             return null;
-        }
+        }*/
 
         /*/// <summary>
         /// Removes the game.

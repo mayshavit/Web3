@@ -120,7 +120,6 @@
                 break;
             default:
                 return;
-                break;
         };
         myMazeBoard.move(direction);
         //}
