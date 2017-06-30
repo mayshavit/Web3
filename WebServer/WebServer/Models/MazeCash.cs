@@ -166,6 +166,7 @@ namespace WebServer
         /// <returns></returns>
         public List<string> GetMazesNames ()
         {
+            //multiGames.Add("bbnbnm", new MultiGame("j", new Maze(), "vgh"));
             //return new List<string>(mazes.Keys);
             return new List<string>(multiGames.Keys);
         }

@@ -38,11 +38,13 @@ namespace WebServer
         }
 
         public void SendMove(/*string senderUserName,*/ string recipientUserName, string move)
-        {
+         {
             string recipientId = connectedUsers[recipientUserName];
             if (recipientId == null)
                 return;
             Clients.Client(recipientId).gotMessage(/*senderUserName,*/ move);
+
+            //Clients.All.gotMessage(move);
         }
 
         /*private MultiGame GetMultiGame(string player)
