@@ -91,8 +91,10 @@ namespace WebServer
         }
 
         // DELETE: api/Maze/5
-        public void Delete(int id)
+        [Route("api/Maze/GetDeleteMaze")]
+        public void GetDeleteMaze(string name)
         {
+            model.CloseGame(name);
         }
     }
 }

@@ -3,17 +3,18 @@ var startRow;
 var startCol;
 var exitRow;
 var exitCol;
-var playerRow;
-var playerCol;
+//var playerRow;
+//var playerCol;
 var playerImage;
 var exitImage;
-var boardEnable;
 var rows;
+var boardEnable;
 var cols;
-var ctx;
+//var ctx;
 var rectWidth;
 var rectHeight;
 var toMove;
+
 
 jQuery(function ($) {
 
@@ -31,10 +32,11 @@ jQuery(function ($) {
         boardEnable = boardEnable;
         rows = rows2;
         cols = cols2;
-        ctx = ctx2;
+        var ctx = ctx2;
         toMove = true;
-        playerRow = startRow2;
-        playerCol = startCol2;
+        var playerRow = startRow2;
+        var playerCol = startCol2;
+        //var canvasName = canvasName2;
         var rectWidth;
         var rectHeight;
 
@@ -84,9 +86,8 @@ jQuery(function ($) {
                     /*startRow*/ playerRow = row;
                     /*startCol*/ playerCol = col;
                     if ((row == exitRow) && (col == exitCol)) {
-                        alert("You Won!!!! :-)");
                         toMove = false;
-                        return;
+                        return "win";
                     }
                     return this;
                 }
@@ -160,8 +161,8 @@ jQuery(function ($) {
 
             playerImage.onload = drawCanvasImage(ctx, playerImage, startCol * rectHeight, (rows - startRow - 1) * rectWidth, rectHeight, rectWidth);
             exitImage.onload = drawCanvasImage(ctx, exitImage, exitCol * rectHeight, (rows - exitRow - 1) * rectWidth, rectHeight, rectWidth);
-            //ctx.drawImage(playerImage, startCol * rectHeight, startRow * rectWidth, rectHeight, rectWidth);
-            //ctx.drawImage(exitImage, exitCol * rectHeight, exitRow * rectWidth, rectHeight, rectWidth);
+            //ctx.drawImage(playerImage, startCol * rectHeight, (rows - startRow - 1) * rectWidth, rectHeight, rectWidth);
+            //ctx.drawImage(exitImage, exitCol * rectHeight, (rows - exitRow - 1) * rectWidth, rectHeight, rectWidth);
             //ctx.drawImage(playerImage, startRow * rectWidth, startCol * rectHeight, rectWidth, rectHeight);
             //ctx.drawImage(exitImage, exitRow * rectWidth, exitCol * rectHeight, rectWidth, rectHeight);
             /*for (i = 0; i < rows; i++) {

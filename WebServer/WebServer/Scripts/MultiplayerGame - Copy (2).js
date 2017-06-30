@@ -18,14 +18,38 @@
         //return false;
     }
 
-    function initialGame(/*name,*/) {
-        alert("initial...");
-        var tempMaze1 = maze; //.clone();
-        var tempMaze2 = maze; //.clone();
-        myMazeBoard = initialBoard(tempMaze1, myMazeBoard, "mazeCanvas");
-        otherMazeBoard = initialBoard(tempMaze2, otherMazeBoard, "mazeCanvas2");
+function initialGame(/*name, maze*/) {
+    alert("initial...");
+    var mazeData = maze.Maze;
+    var rows = maze.Rows;
+    var cols = maze.Cols;
+    alert("initial maze");
+        var startRow = maze.Start.Row;
+        var startCol = maze.Start.Col;
+        var exitRow = maze.End.Row;
+        var exitCol = maze.End.Col;
+        var playerImage1 = new Image();
+        playerImage1.src = "../Views/Images/minion.jpg";
+        var exitImage1 = new Image();
+        exitImage1.src = "../Views/Images/banana.jpg";
 
-        /*var canvas = document.getElementById("mazeCanvas2");
+        var myCanvas = document.getElementById("mazeCanvas");
+        var ctx1 = myCanvas.getContext("2d");
+
+        myMazeBoard = $("#mazeCanvas").mazeBoard(
+            mazeData, // the matrix containing the maze cells
+            startRow, startCol, // initial position of the player
+            exitRow, exitCol, // the exit position
+            playerImage1, // player's icon (of type Image)
+            exitImage1, // exit's icon (of type Image)
+            true, // is the board enabled (i.e., player can move)
+            /*function (direction, playerRow, playerCol) { // a callback function which is invoked after each move
+            })*/
+            rows,
+            cols,
+            ctx1);
+
+        var canvas = document.getElementById("mazeCanvas2");
         var ctx2 = canvas.getContext("2d");
 
         var playerImage2 = new Image();
@@ -41,7 +65,7 @@
             true, // is the board enabled (i.e., player can move)
             rows,
             cols,
-            ctx2);*/
+            ctx2);
 
         window.document.title = mazeName; //name;
         mazesNames();
@@ -54,43 +78,9 @@
         }).done(function (otherPlayerName) {
             otherPlayer = otherPlayerName;
             //return false;
-        });
+            });
         alert("d initial!");
         return false;
-    }
-
-    function initialBoard(maze, board, canvas) {
-        var mazeData = maze.Maze;
-        var rows = maze.Rows;
-        var cols = maze.Cols;
-        alert("initial maze");
-        var startRow = maze.Start.Row;
-        var startCol = maze.Start.Col;
-        var exitRow = maze.End.Row;
-        var exitCol = maze.End.Col;
-        var playerImage1 = new Image();
-        playerImage1.src = "../Views/Images/minion.jpg";
-        var exitImage1 = new Image();
-        exitImage1.src = "../Views/Images/banana.jpg";
-
-        var myCanvas = document.getElementById(canvas);
-        var ctx1 = myCanvas.getContext("2d");
-
-        board = $("#" + canvas).mazeBoard(
-            mazeData, // the matrix containing the maze cells
-            startRow, startCol, // initial position of the player
-            exitRow, exitCol, // the exit position
-            playerImage1, // player's icon (of type Image)
-            exitImage1, // exit's icon (of type Image)
-            true, // is the board enabled (i.e., player can move)
-            /*function (direction, playerRow, playerCol) { // a callback function which is invoked after each move
-            })*/
-            rows,
-            cols,
-            ctx1,
-        );
-
-        return board;
     }
 
     //mazesNames();
@@ -113,33 +103,14 @@
         //return false;
     } else {
         gameHub.client.gotMessage = function (move) {
-            //alert("msg!!!!" + playerName);
+            alert("msg!!!!" + playerName);
             if (move == "startGame") {
-                toStart = true;
                 alert("start game");
+                toStart = true;
                 initialGame();
             }
             else {
-                var myCanvas = document.getElementById("mazeCanvas2");
-                var ctx1 = myCanvas.getContext("2d");
-                var isAWinner = otherMazeBoard.move(move);
-
-                if (isAWinner == "win") {
-                    $.ajax({
-                        url: "../api/Client/GetUpdateClient",
-                        type: "GET",
-                        data: { id: playerName, winner: false },
-                        async: false
-                    }).done(function (data) {
-                        if (data == "Success") {
-                            alert("Your score has been updated");
-                        }
-                        else {
-                            alert("Problem updating score");
-                        }
-                        return false;
-                    });
-                }
+                otherMazeBoard.move(move);
             }
             return false;
         };
@@ -223,40 +194,8 @@
                     default:
                         return;
                 };
-                var myCanvas = document.getElementById("mazeCanvas");
-                var ctx1 = myCanvas.getContext("2d");
-                var isAWinner = myMazeBoard.move(direction);
+                myMazeBoard.move(direction);
                 gameHub.server.sendMove(otherPlayer, direction);
-                if (isAWinner == "win") {
-                    alert("You Won!!!! :-)");
-                    $.ajax({
-                        url: "../api/Client/GetUpdateClient",
-                        type: "GET",
-                        data: { id: playerName, winner: true },
-                        async: false
-                    }).done(function (data) {
-                        if (data == "Success") {
-                            alert("Your score has been updated");
-                        }
-                        else {
-                            alert("Problem updating score");
-                        }
-                        return false;
-
-                        /*while (!toStart) {
-            
-                        }
-                        initialGame(name, maze);
-                        return false;*/
-                        });
-
-                    $.ajax({
-                        url: "../api/Maze/GetDeleteMaze",
-                        type: "GET",
-                        data: { name: mazeName },
-                        async: false
-                    });
-                }
                 return false;
                 //}
 

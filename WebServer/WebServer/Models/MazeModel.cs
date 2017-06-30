@@ -193,7 +193,7 @@ namespace WebServer
             game.UpdateMove(json, gamer);
 
             return json;
-        }
+        }*/
 
         /// <summary>
         /// Closes the game.
@@ -201,16 +201,14 @@ namespace WebServer
         /// <param name="name">The name.</param>
         /// <param name="gamer">The gamer.</param>
         /// <returns></returns>
-        public string CloseGame(string name, ClientNotifier gamer)
+        public void CloseGame(string name)
         {
             //MultiGame game = cash.GetGame(name);
             MultiGame game = cash.GetMultiGame(name);
-            game.CloseGame();
+            //game.CloseGame();
 
             //cash.RemoveGame(name);
             cash.RemoveMultiGame(name);
-
-            return "close";
-        }*/
+        }
     }
 }

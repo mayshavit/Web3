@@ -133,6 +133,7 @@
     <Content Include="Scripts\knockout-3.4.2.debug.js" />
     <Content Include="Scripts\knockout-3.4.2.js" />
     <Content Include="Scripts\Login.js" />
+    <Content Include="Scripts\MultiplayerGame - Copy %282%29.js" />
     <Content Include="Scripts\MultiplayerGame - Copy.js" />
     <Content Include="Scripts\MultiplayerGame.js" />
     <Content Include="Scripts\navbar.js" />

@@ -71,7 +71,7 @@ namespace WebServer.Controllers
         {
             // ClientModel clientModel = await db.ClientModels.FindAsync(id);
             ClientModel clientModel =  db.ClientModels.Find(id);
-            if (clientModel == null || clientModel.Password != password)
+            if (clientModel == null || clientModel.Password != Hash(password))
             {
                 return "notFound";
             }
@@ -111,6 +111,40 @@ namespace WebServer.Controllers
             }
 
             return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        //[ResponseType(typeof(ClientModel))]
+        [Route("api/Client/GetUpdateClient")]
+        public string GetUpdateClient(string id, bool winner)
+        {
+            if (!ModelState.IsValid)
+            {
+                return "Bad Request";
+            }
+
+            if (ClientModelExists(id))
+            {
+                if (winner)
+                {
+                    db.ClientModels.Find(id).Wins++;
+                }
+                else
+                {
+                    db.ClientModels.Find(id).Loses++;
+                }
+                //return "Conflict";
+            }
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateException)
+            {
+                    throw;
+            }
+
+            return "Success";
         }
 
         // POST: api/Client
